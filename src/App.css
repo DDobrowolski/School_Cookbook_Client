@@ -1,0 +1,23 @@
+.App {
+  text-align: center;
+}
+
+.App .container {
+  margin-top: 50px;
+}
+
+button:focus {
+  outline: none;
+}
+
+.recipe-list button {
+  display: flex;
+}
+
+.recipe-list button span {
+  flex: 0 1 30%;
+}
+
+.recipe-list .name {
+  font-weight: 900;
+}
