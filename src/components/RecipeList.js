@@ -2,9 +2,9 @@ import React from 'react';
 
 const RecipeList = ({ className = '', recipes }) => {
   return (
-    <div class={`list-group recipe-list ${className}`}>
+    <div className={`list-group recipe-list ${className}`}>
       {recipes.map((r) => (
-        <button type="button" class="list-group-item list-group-item-action">
+        <button type="button" className="list-group-item list-group-item-action" key={r.id}>
           <span className='name'>{r.name}</span>
           <span>Wege: nie</span>
           <span>Wegan: nie</span>
