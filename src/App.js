@@ -6,8 +6,9 @@ import {parse} from 'fast-xml-parser';
 
 const mockedRecipes = [{ id: 1, name: 'Bula' }, { id: 2, name: 'Ciasto' }];
 
-const fetchRecipes = async () => {
-  let resp = await fetch(`${process.env.REACT_APP_API_HOST}/recipes`, {
+const fetchRecipes = async (q = '') => {
+  const qParam = q ? `q=${q}` : '';
+  let resp = await fetch(`${process.env.REACT_APP_API_HOST}/recipes?${qParam}`, {
     headers: {
       'Content-Type': 'application/xml',
     },
@@ -20,11 +21,14 @@ const fetchRecipes = async () => {
 
 function App() {
   const [recipes, setRecipes] = React.useState([]);
-  React.useEffect(() => fetchRecipes().then(r => setRecipes(r)), []);
+  const [searchQuery, setSearchQuery] = React.useState('');
+  React.useEffect(() => fetchRecipes(searchQuery).then(r => setRecipes(r)), [searchQuery]);
+
+
 
   return (
     <div className="App">
-      <Topbar />
+      <Topbar onSearch={setSearchQuery} searchValue={searchQuery} />
       <div className="container">
         <RecipeList recipes={recipes} />
       </div>
