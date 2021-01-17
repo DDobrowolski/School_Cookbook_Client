@@ -1,17 +1,17 @@
 import { Checkbox, TableCell, TableRow } from '@material-ui/core';
 import React from 'react';
 const CustomTableRow = ({ row, index, isSelected, handleClick }) => {
-  const isItemSelected = isSelected(row.name);
+  const isItemSelected = isSelected(row.id);
   const labelId = `enhanced-table-checkbox-${index}`;
 
   return (
     <TableRow
       hover
-      onClick={(event) => handleClick(event, row.name)}
+      onClick={(event) => handleClick(event, row.id)}
       role="checkbox"
       aria-checked={isItemSelected}
       tabIndex={-1}
-      key={row.name}
+      key={row.id}
       selected={isItemSelected}
     >
       <TableCell padding="checkbox">
