@@ -10,13 +10,13 @@ const Topbar = ({ className, onSearch,searchValue }) => {
         <input
           className="form-control mr-sm-2"
           type="search"
-          placeholder="Search"
+          placeholder="Szukaj"
           aria-label="Search"
           onChange={onSearchChange}
           value={searchValue}
         />
         <button className="btn btn-outline-secondary my-2 my-sm-0" type="submit">
-          Search
+          Szukaj
         </button>
       </form>
     </nav>
