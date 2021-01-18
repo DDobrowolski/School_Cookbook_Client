@@ -69,6 +69,8 @@ const CustomTable = ({ rows, headCells }) => {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
+  const fields = headCells.map(c => c.id);
+
   const handleRequestSort = (_, property) => {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
@@ -144,6 +146,8 @@ const CustomTable = ({ rows, headCells }) => {
                     index={index}
                     handleClick={handleClick}
                     isSelected={isSelected}
+                    fields={fields}
+                    key={row.id}
                   />
                 ))}
             </TableBody>

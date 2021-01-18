@@ -1,34 +1,40 @@
-import { Checkbox, lighten, makeStyles, TableCell, TableRow } from '@material-ui/core';
+import {
+  Checkbox,
+  lighten,
+  makeStyles,
+  TableCell,
+  TableRow,
+} from '@material-ui/core';
 import React from 'react';
 
 const useStyles = makeStyles(() => ({
   tableRow: {
-    "&$hover, &$hover:hover": {
-      cursor: 'pointer'
+    '&$hover, &$hover:hover': {
+      cursor: 'pointer',
     },
-    "&$selected, &$selected:hover": {
-      backgroundColor: lighten('#737373', 0.85)
-    }
+    '&$selected, &$selected:hover': {
+      backgroundColor: lighten('#737373', 0.85),
+    },
   },
   tableCell: {
-    "$selected &": {
-      color: "#000"
-    }
+    '$selected &': {
+      color: '#000',
+    },
   },
   checkbox: {
-    "&:hover, &$checked:hover": {
-      backgroundColor: "#e6e6e6"
+    '&:hover, &$checked:hover': {
+      backgroundColor: '#e6e6e6',
     },
-    "&$checked, &$checked:hover": {
-      color: "#737373"
-    }
+    '&$checked, &$checked:hover': {
+      color: '#737373',
+    },
   },
   hover: {},
   selected: {},
-  checked: {}
+  checked: {},
 }));
 
-const CustomTableRow = ({ row, index, isSelected, handleClick }) => {
+const CustomTableRow = ({ row, index, isSelected, handleClick, fields }) => {
   const isItemSelected = isSelected(row.id);
   const labelId = `enhanced-table-checkbox-${index}`;
   const classes = useStyles();
@@ -53,15 +59,18 @@ const CustomTableRow = ({ row, index, isSelected, handleClick }) => {
           className={classes.checkbox}
         />
       </TableCell>
-      <TableCell
-        component="th"
-        id={labelId}
-        scope="row"
-        padding="none"
-        className={classes.tableCell}
-      >
-        {row.name}
-      </TableCell>
+      {fields.map((v) => (
+        <TableCell
+          component="th"
+          id={labelId}
+          scope="row"
+          padding="none"
+          className={classes.tableCell}
+          key={`${labelId}_${v}`}
+        >
+          {row[v]}
+        </TableCell>
+      ))}
     </TableRow>
   );
 };
