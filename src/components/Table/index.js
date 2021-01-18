@@ -3,10 +3,8 @@ import {
   Paper,
   Table,
   TableBody,
-  TableCell,
   TableContainer,
   TablePagination,
-  TableRow,
 } from '@material-ui/core';
 import React from 'react';
 import CustomTableHead from './CustomTableHead';
@@ -71,7 +69,7 @@ const CustomTable = ({ rows, headCells }) => {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
-  const handleRequestSort = (event, property) => {
+  const handleRequestSort = (_, property) => {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
@@ -106,7 +104,7 @@ const CustomTable = ({ rows, headCells }) => {
     setSelected(newSelected);
   };
 
-  const handleChangePage = (event, newPage) => {
+  const handleChangePage = (_, newPage) => {
     setPage(newPage);
   };
 
@@ -116,9 +114,6 @@ const CustomTable = ({ rows, headCells }) => {
   };
 
   const isSelected = (id) => selected.indexOf(id) !== -1;
-
-  const emptyRows =
-    rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
   return (
     <div className={classes.root}>
@@ -151,11 +146,6 @@ const CustomTable = ({ rows, headCells }) => {
                     isSelected={isSelected}
                   />
                 ))}
-              {emptyRows > 0 && (
-                <TableRow style={{ height: 53 * emptyRows }}>
-                  <TableCell colSpan={6} />
-                </TableRow>
-              )}
             </TableBody>
           </Table>
         </TableContainer>
