@@ -45,7 +45,7 @@ const CustomTableToolbar = ({ numSelected }) => {
           variant="subtitle1"
           component="div"
         >
-          {numSelected} selected
+          {numSelected} wybrano
         </Typography>
       ) : (
         <Typography
