@@ -61,7 +61,7 @@ function stableSort(array, comparator) {
   return stabilizedThis.map((el) => el[0]);
 }
 
-const CustomTable = ({ rows, headCells }) => {
+const CustomTable = ({ rows, headCells, tableActions }) => {
   const classes = useStyles();
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
@@ -148,6 +148,7 @@ const CustomTable = ({ rows, headCells }) => {
                     isSelected={isSelected}
                     fields={fields}
                     key={row.id}
+                    tableActions={tableActions}
                   />
                 ))}
             </TableBody>

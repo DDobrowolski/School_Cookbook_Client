@@ -1,10 +1,17 @@
 import { parse } from 'fast-xml-parser';
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import CustomTable from '../components/Table';
+import BasicTable from '../components/BasicTable';
 
 const headCells = [
   { id: 'name', numeric: false, disablePadding: true, label: 'Nazwa' },
+  { id: 'description', numeric: false, disablePadding: false, label: 'Opis' },
+  {
+    id: 'preparation-method',
+    numeric: false,
+    disablePadding: false,
+    label: 'Sposób przyrządzenia',
+  },
   // { id: 'calories', numeric: true, disablePadding: false, label: 'Calories' },
   // { id: 'fat', numeric: true, disablePadding: false, label: 'Fat (g)' },
   // { id: 'carbs', numeric: true, disablePadding: false, label: 'Carbs (g)' },
@@ -30,11 +37,15 @@ const fetchRecipe = async (id) => {
 };
 
 const Detail = () => {
-  const [recipe, setRecipe] = React.useState([]);
+  const [recipe, setRecipe] = React.useState(null);
   const { id } = useParams();
   React.useEffect(() => fetchRecipe(id).then((r) => setRecipe(r)), [id]);
 
-  return <CustomTable rows={[recipe]} headCells={headCells} />;
+  return recipe ? (
+    <BasicTable row={recipe} headCells={headCells} />
+  ) : (
+    <p>Nie znaleziono przepisu.</p>
+  );
 };
 
 export default Detail;

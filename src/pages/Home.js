@@ -1,5 +1,6 @@
 import { parse } from 'fast-xml-parser';
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import CustomTable from '../components/Table';
 
 const headCells = [
@@ -38,11 +39,23 @@ const fetchRecipes = async (q = '') => {
 const Home = () => {
   const [recipes, setRecipes] = React.useState([]);
   const [searchQuery, setSearchQuery] = React.useState('');
+  const history = useHistory();
+
+  const tableActions = [
+    {
+      label: 'Szczegóły',
+      id: 'details',
+      onClick: (id) => history.push(`/${id}`),
+    },
+  ];
+
   React.useEffect(() => fetchRecipes(searchQuery).then((r) => setRecipes(r)), [
     searchQuery,
   ]);
 
-  return <CustomTable rows={recipes} headCells={headCells} />;
+  return (
+    <CustomTable rows={recipes} headCells={headCells} tableActions={tableActions} />
+  );
 };
 
 export default Home;

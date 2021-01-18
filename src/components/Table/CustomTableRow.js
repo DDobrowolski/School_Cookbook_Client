@@ -6,6 +6,8 @@ import {
   TableRow,
 } from '@material-ui/core';
 import React from 'react';
+import { Link } from 'react-router-dom';
+import TableAction from './TableAction';
 
 const useStyles = makeStyles(() => ({
   tableRow: {
@@ -34,7 +36,14 @@ const useStyles = makeStyles(() => ({
   checked: {},
 }));
 
-const CustomTableRow = ({ row, index, isSelected, handleClick, fields }) => {
+const CustomTableRow = ({
+  row,
+  index,
+  isSelected,
+  handleClick,
+  fields,
+  tableActions = []
+}) => {
   const isItemSelected = isSelected(row.id);
   const labelId = `enhanced-table-checkbox-${index}`;
   const classes = useStyles();
@@ -71,6 +80,13 @@ const CustomTableRow = ({ row, index, isSelected, handleClick, fields }) => {
           {row[v]}
         </TableCell>
       ))}
+      {tableActions.length ? (
+        <TableCell padding='checkbox'>
+          {tableActions.map((a) => (
+            <TableAction key={a.id} label={a.label} onClick={() => a.onClick(row.id)} />
+          ))}
+        </TableCell>
+      ) : null}
     </TableRow>
   );
 };
