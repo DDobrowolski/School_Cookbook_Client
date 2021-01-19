@@ -1,10 +1,11 @@
 import { parse } from 'fast-xml-parser';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import CustomTable from '../components/Table';
+import CustomTable from '../components/OverviewTable';
 
 const headCells = [
   { id: 'name', numeric: false, disablePadding: true, label: 'Nazwa' },
+  { id: 'created-at', numeric: false, disablePadding: true, label: 'Dodano' },
   // { id: 'calories', numeric: true, disablePadding: false, label: 'Calories' },
   // { id: 'fat', numeric: true, disablePadding: false, label: 'Fat (g)' },
   // { id: 'carbs', numeric: true, disablePadding: false, label: 'Carbs (g)' },

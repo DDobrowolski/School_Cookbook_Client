@@ -77,7 +77,7 @@ const CustomTableRow = ({
           className={classes.tableCell}
           key={`${labelId}_${v}`}
         >
-          {row[v]}
+          {v === 'created-at' ? new Date(row[v]).toLocaleString('pl-PL') : row[v]}
         </TableCell>
       ))}
       {tableActions.length ? (

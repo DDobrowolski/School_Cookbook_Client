@@ -1,9 +1,10 @@
 import { parse } from 'fast-xml-parser';
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import BasicTable from '../components/BasicTable';
+import BasicTable from '../components/DetailTable';
+import IngredientsTable from '../components/IngredientsTable';
 
-const headCells = [
+const mainHeadCells = [
   { id: 'name', numeric: false, disablePadding: true, label: 'Nazwa' },
   { id: 'description', numeric: false, disablePadding: false, label: 'Opis' },
   {
@@ -16,6 +17,28 @@ const headCells = [
   // { id: 'fat', numeric: true, disablePadding: false, label: 'Fat (g)' },
   // { id: 'carbs', numeric: true, disablePadding: false, label: 'Carbs (g)' },
   // { id: 'protein', numeric: true, disablePadding: false, label: 'Protein (g)' },
+];
+
+const ingredientsHeadCells = [
+  { id: 'name', numeric: false, disablePadding: true, label: 'Nazwa' },
+  {
+    id: 'ingredient-type.name',
+    numeric: false,
+    disablePadding: false,
+    label: 'Typ',
+  },
+  {
+    id: 'amount-of',
+    numeric: false,
+    disablePadding: false,
+    label: 'Ilość',
+  },
+  {
+    id: 'measure-unit.name',
+    numeric: false,
+    disablePadding: false,
+    label: 'Jednostka',
+  },
 ];
 
 const fetchRecipe = async (id) => {
@@ -33,6 +56,7 @@ const fetchRecipe = async (id) => {
     console.error(e);
   }
   const output = parsed && parsed.recipe ? parsed.recipe : null;
+  console.log(output);
   return output;
 };
 
@@ -42,7 +66,19 @@ const Detail = () => {
   React.useEffect(() => fetchRecipe(id).then((r) => setRecipe(r)), [id]);
 
   return recipe ? (
-    <BasicTable row={recipe} headCells={headCells} />
+    <>
+      <h2 className='tableTitle'>{recipe.name}</h2>
+      <BasicTable row={recipe} headCells={mainHeadCells} />
+      <h4 className='tableTitle'>Składniki</h4>
+      <IngredientsTable
+        rows={
+          recipe.ingredients && recipe.ingredients.ingredient
+            ? recipe.ingredients.ingredient
+            : []
+        }
+        headCells={ingredientsHeadCells}
+      />
+    </>
   ) : (
     <p>Nie znaleziono przepisu.</p>
   );
