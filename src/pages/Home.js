@@ -1,3 +1,4 @@
+import { Button } from '@material-ui/core';
 import { parse } from 'fast-xml-parser';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
@@ -55,7 +56,11 @@ const Home = () => {
   ]);
 
   return (
-    <CustomTable rows={recipes} headCells={headCells} tableActions={tableActions} />
+      <CustomTable
+        rows={recipes}
+        headCells={headCells}
+        tableActions={tableActions}
+      />
   );
 };
 
