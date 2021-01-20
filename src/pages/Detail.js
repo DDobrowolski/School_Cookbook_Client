@@ -3,12 +3,13 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import BasicTable from '../components/DetailTable';
 import IngredientsTable from '../components/IngredientsTable';
+import { replaceDashWithUnderscore } from '../helpers/objectParser';
 
 const mainHeadCells = [
   { id: 'name', numeric: false, disablePadding: true, label: 'Nazwa' },
   { id: 'description', numeric: false, disablePadding: false, label: 'Opis' },
   {
-    id: 'preparation-method',
+    id: 'preparation_method',
     numeric: false,
     disablePadding: false,
     label: 'Sposób przyrządzenia',
@@ -55,9 +56,8 @@ const fetchRecipe = async (id) => {
   } catch (e) {
     console.error(e);
   }
-  const output = parsed && parsed.recipe ? parsed.recipe : null;
-  console.log(output);
-  return output;
+  const recipe = parsed && parsed.recipe ? replaceDashWithUnderscore(parsed.recipe) : null;
+  return recipe;
 };
 
 const Detail = () => {

@@ -35,41 +35,24 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function descendingComparator(a, b, orderBy) {
-  if (b[orderBy] < a[orderBy]) {
-    return -1;
-  }
-  if (b[orderBy] > a[orderBy]) {
-    return 1;
-  }
-  return 0;
-}
-
-function getComparator(order, orderBy) {
-  return order === 'desc'
-    ? (a, b) => descendingComparator(a, b, orderBy)
-    : (a, b) => -descendingComparator(a, b, orderBy);
-}
-
-function stableSort(array, comparator) {
-  const stabilizedThis = array.map((el, index) => [el, index]);
-  stabilizedThis.sort((a, b) => {
-    const order = comparator(a[0], b[0]);
-    if (order !== 0) return order;
-    return a[1] - b[1];
-  });
-  return stabilizedThis.map((el) => el[0]);
-}
-
-const CustomTable = ({ rows, headCells, tableActions }) => {
+const CustomTable = ({
+  rows,
+  headCells,
+  tableActions,
+  pageLen,
+  setPageLen,
+  page,
+  setPage,
+  count,
+  order,
+  setOrder,
+  orderBy,
+  setOrderBy,
+}) => {
   const classes = useStyles();
-  const [order, setOrder] = React.useState('asc');
-  const [orderBy, setOrderBy] = React.useState('calories');
   const [selected, setSelected] = React.useState([]);
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
-  const fields = headCells.map(c => c.id);
+  const fields = headCells.map((c) => c.id);
 
   const handleRequestSort = (_, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -107,12 +90,12 @@ const CustomTable = ({ rows, headCells, tableActions }) => {
   };
 
   const handleChangePage = (_, newPage) => {
-    setPage(newPage);
+    setPage(newPage + 1);
   };
 
   const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
+    setPageLen(parseInt(event.target.value, 10));
+    setPage(1);
   };
 
   const isSelected = (id) => selected.indexOf(id) !== -1;
@@ -138,27 +121,25 @@ const CustomTable = ({ rows, headCells, tableActions }) => {
               rowCount={rows.length}
             />
             <TableBody>
-              {stableSort(rows, getComparator(order, orderBy))
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row, index) => (
-                  <CustomTableRow
-                    row={row}
-                    index={index}
-                    handleClick={handleClick}
-                    isSelected={isSelected}
-                    fields={fields}
-                    key={row.id}
-                    tableActions={tableActions}
-                  />
-                ))}
+              {rows.map((row, index) => (
+                <CustomTableRow
+                  row={row}
+                  index={index}
+                  handleClick={handleClick}
+                  isSelected={isSelected}
+                  fields={fields}
+                  key={row.id}
+                  tableActions={tableActions}
+                />
+              ))}
             </TableBody>
           </Table>
         </TableContainer>
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
-          count={rows.length}
-          rowsPerPage={rowsPerPage}
+          count={count}
+          rowsPerPage={pageLen}
           page={page}
           onChangePage={handleChangePage}
           onChangeRowsPerPage={handleChangeRowsPerPage}

@@ -66,7 +66,6 @@ const validateFile = async (file) => {
   });
   if (!resp) return null;
   resp = await resp.json();
-  console.log(resp);
   return resp;
 };
 
@@ -82,7 +81,6 @@ const New = () => {
   const onFileUploadInputChange = (e) => {
     const reader = new FileReader();
     reader.onload = () => {
-      console.log(reader.result);
       setXmlFile(reader.result);
     };
     reader.readAsText(e.target.files[0]);
