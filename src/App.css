@@ -42,3 +42,7 @@ button:focus {
 .buttonsContainer button {
   margin-right: 15px;
 }
+
+.MuiTableCell-head {
+  font-weight: 900 !important;
+}

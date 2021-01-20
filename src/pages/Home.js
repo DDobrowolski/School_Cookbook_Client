@@ -66,7 +66,7 @@ const Home = () => {
   const [page, setPage] = React.useState(1);
   const [count, setCount] = React.useState(0);
   const [order, setOrder] = React.useState('asc');
-  const [orderBy, setOrderBy] = React.useState('name');
+  const [orderBy, setOrderBy] = React.useState('created_at');
 
   const history = useHistory();
 
