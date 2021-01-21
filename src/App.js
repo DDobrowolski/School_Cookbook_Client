@@ -8,6 +8,7 @@ import {
 import Layout from './components/Layout';
 import Home from './pages/Home';
 import Detail from './pages/Detail';
+import DetailPrint from './pages/DetailPrint';
 import New from './pages/New';
 
 
@@ -22,8 +23,11 @@ function App() {
         <Route path='/new'>
           <New />
         </Route>
-        <Route path='/:id'>
+        <Route exact path='/:id'>
           <Detail />
+        </Route>
+        <Route path='/:id/print'>
+          <DetailPrint />
         </Route>
       </Switch>
       </Layout>

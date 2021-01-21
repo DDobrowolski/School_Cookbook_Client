@@ -16,7 +16,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function BasicTable({ row, headCells }) {
+export default function BasicTable({ row, headCells, colors = false }) {
   const classes = useStyles();
   const fields = headCells.map((c) => c.id);
 
@@ -26,10 +26,10 @@ export default function BasicTable({ row, headCells }) {
     <TableContainer component={Paper}>
       <Table className={classes.table} aria-label="simple table">
         <TableBody>
-          {fields.map((f) => (
+          {fields.map((f, i) => (
             <TableRow key={f}>
-              <TableCell variant="head">{findValidHeader(f).label}</TableCell>
-              <TableCell>{row[f]}</TableCell>
+              <TableCell variant="head" className={colors ? i % 2 === 0 ?'table-primary' : 'table-success' : ''}>{findValidHeader(f).label}</TableCell>
+              <TableCell className={colors ? i % 2 === 0 ?'table-primary' : 'table-success' : ''}>{row[f]}</TableCell>
             </TableRow>
           ))}
         </TableBody>

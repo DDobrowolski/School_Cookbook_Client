@@ -7,7 +7,6 @@ import {
   Typography,
 } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
-import FilterListIcon from '@material-ui/icons/FilterList';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
@@ -64,13 +63,7 @@ const CustomTableToolbar = ({ numSelected }) => {
             <DeleteIcon />
           </IconButton>
         </Tooltip>
-      ) : (
-        <Tooltip title="Filtry">
-          <IconButton aria-label="filter list">
-            <FilterListIcon />
-          </IconButton>
-        </Tooltip>
-      )}
+      ) : null}
     </Toolbar>
   );
 };

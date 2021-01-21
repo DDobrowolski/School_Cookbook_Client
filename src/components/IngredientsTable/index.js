@@ -15,7 +15,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function IngredientsTable({ rows, headCells }) {
+export default function IngredientsTable({ rows, headCells, colors = false }) {
   const classes = useStyles();
   const fields = headCells.map((c) => c.id);
 
@@ -25,7 +25,9 @@ export default function IngredientsTable({ rows, headCells }) {
         <TableHead>
           <TableRow>
             {headCells.map((c) => (
-              <TableCell key={c.id}>{c.label}</TableCell>
+              <TableCell key={c.id} className={colors ? 'table-secondary' : ''}>
+                {c.label}
+              </TableCell>
             ))}
           </TableRow>
         </TableHead>
@@ -33,7 +35,10 @@ export default function IngredientsTable({ rows, headCells }) {
           {rows.map((row) => (
             <TableRow key={row.id}>
               {fields.map((f) => (
-                <TableCell key={`${row.id}_${f}`}>
+                <TableCell
+                  key={`${row.id}_${f}`}
+                  className={colors ? 'table-primary' : ''}
+                >
                   {get(row, f)}
                 </TableCell>
               ))}

@@ -1,6 +1,7 @@
+import { Button } from '@material-ui/core';
 import { parse } from 'fast-xml-parser';
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import BasicTable from '../components/DetailTable';
 import IngredientsTable from '../components/IngredientsTable';
 import { replaceDashWithUnderscore } from '../helpers/objectParser';
@@ -56,20 +57,25 @@ const fetchRecipe = async (id) => {
   } catch (e) {
     console.error(e);
   }
-  const recipe = parsed && parsed.recipe ? replaceDashWithUnderscore(parsed.recipe) : null;
+  const recipe =
+    parsed && parsed.recipe ? replaceDashWithUnderscore(parsed.recipe) : null;
   return recipe;
 };
 
 const Detail = () => {
   const [recipe, setRecipe] = React.useState(null);
   const { id } = useParams();
+  const history = useHistory();
   React.useEffect(() => fetchRecipe(id).then((r) => setRecipe(r)), [id]);
 
   return recipe ? (
     <>
-      <h2 className='tableTitle'>{recipe.name}</h2>
-      <BasicTable row={recipe} headCells={mainHeadCells} />
-      <h4 className='tableTitle'>Składniki</h4>
+      <h2 className="tableTitle">{recipe.name}</h2>
+      <Button variant="contained" className="buttonPrint" onClick={() => {}}>
+        <a href={`/${id}/print`} target='_blank' rel='noreferrer' >Wersja do druku</a>
+      </Button>
+      <BasicTable row={recipe} headCells={mainHeadCells} colors />
+      <h4 className="tableTitle">Składniki</h4>
       <IngredientsTable
         rows={
           recipe.ingredients && recipe.ingredients.ingredient
@@ -77,6 +83,7 @@ const Detail = () => {
             : []
         }
         headCells={ingredientsHeadCells}
+        colors
       />
     </>
   ) : (

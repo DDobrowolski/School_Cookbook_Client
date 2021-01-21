@@ -46,3 +46,7 @@ button:focus {
 .MuiTableCell-head {
   font-weight: 900 !important;
 }
+
+.buttonPrint{
+  margin: 10px 0 !important;
+}
