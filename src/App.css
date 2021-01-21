@@ -29,6 +29,7 @@ button:focus {
 .tableAction{
   text-decoration: underline;
   color: gray;
+  margin: 0 5px;
 }
 .tableAction:hover{
   color: black;

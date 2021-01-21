@@ -8,6 +8,7 @@ import { replaceDashWithUnderscore } from '../helpers/objectParser';
 const headCells = [
   { id: 'name', numeric: false, disablePadding: true, label: 'Nazwa' },
   { id: 'created_at', numeric: false, disablePadding: true, label: 'Dodano' },
+  { id: 'description', numeric: false, disablePadding: true, label: 'Opis' },
   // { id: 'calories', numeric: true, disablePadding: false, label: 'Calories' },
   // { id: 'fat', numeric: true, disablePadding: false, label: 'Fat (g)' },
   // { id: 'carbs', numeric: true, disablePadding: false, label: 'Carbs (g)' },
@@ -59,6 +60,17 @@ const fetchRecipes = async (
   return output;
 };
 
+const removeRecipe = async (ids) => {
+  const resp = await fetch(`${process.env.REACT_APP_API_HOST}/recipes`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ ids }),
+  });
+  return resp.json();
+};
+
 const Home = () => {
   const [recipes, setRecipes] = React.useState([]);
   const [searchQuery, setSearchQuery] = React.useState('');
@@ -67,6 +79,7 @@ const Home = () => {
   const [count, setCount] = React.useState(0);
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('created_at');
+  const [refresh, setRefresh] = React.useState(0);
 
   const history = useHistory();
 
@@ -78,13 +91,18 @@ const Home = () => {
     },
   ];
 
+  const onRemoveClick = (ids) =>
+    confirm('Jesteś pewien?') ? removeRecipe(ids) : null;
+
+  const handleRefresh = () => setRefresh((p) => (p === 0 ? 1 : 0));
+
   React.useEffect(
     () =>
       fetchRecipes(searchQuery, page, pageLen, order, orderBy).then((r) => {
         setRecipes(r ? r.recipes : []);
         setCount(r ? r.count : 0);
       }),
-    [searchQuery, page, pageLen, order, orderBy]
+    [searchQuery, page, pageLen, order, orderBy, refresh]
   );
 
   return (
@@ -101,6 +119,8 @@ const Home = () => {
       setOrder={setOrder}
       orderBy={orderBy}
       setOrderBy={setOrderBy}
+      onRemoveClick={onRemoveClick}
+      handleRefresh={handleRefresh}
     />
   );
 };

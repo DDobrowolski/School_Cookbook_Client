@@ -48,6 +48,8 @@ const CustomTable = ({
   setOrder,
   orderBy,
   setOrderBy,
+  onRemoveClick,
+  handleRefresh,
 }) => {
   const classes = useStyles();
   const [selected, setSelected] = React.useState([]);
@@ -67,6 +69,14 @@ const CustomTable = ({
       return;
     }
     setSelected([]);
+  };
+
+  const handleRemoveClick = () => {
+    const removed = onRemoveClick(selected);
+    if (removed) {
+      setSelected([]);
+      handleRefresh();
+    }
   };
 
   const handleClick = (_, id) => {
@@ -103,7 +113,10 @@ const CustomTable = ({
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
-        <CustomTableToolbar numSelected={selected.length} />
+        <CustomTableToolbar
+          numSelected={selected.length}
+          onRemoveClick={handleRemoveClick}
+        />
         <TableContainer>
           <Table
             className={classes.table}
