@@ -1,5 +1,6 @@
-import { Button } from '@material-ui/core';
+import { TextField } from '@material-ui/core';
 import { parse } from 'fast-xml-parser';
+import { debounce } from 'lodash';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import CustomTable from '../components/OverviewTable';
@@ -79,6 +80,8 @@ const Home = () => {
 
   const history = useHistory();
 
+  const handleSearch = debounce(setSearchQuery, 250);
+
   const tableActions = [
     {
       label: 'Szczegóły',
@@ -102,22 +105,31 @@ const Home = () => {
   );
 
   return (
-    <CustomTable
-      rows={recipes}
-      headCells={headCells}
-      tableActions={tableActions}
-      pageLen={pageLen}
-      setPageLen={setPageLen}
-      page={page - 1}
-      setPage={setPage}
-      count={count}
-      order={order}
-      setOrder={setOrder}
-      orderBy={orderBy}
-      setOrderBy={setOrderBy}
-      onRemoveClick={onRemoveClick}
-      handleRefresh={handleRefresh}
-    />
+    <>
+      <form noValidate autoComplete="off">
+        <TextField
+          id="standard-basic"
+          label="Szukaj"
+          onChange={(e) => handleSearch(e.target.value)}
+        />
+      </form>
+      <CustomTable
+        rows={recipes}
+        headCells={headCells}
+        tableActions={tableActions}
+        pageLen={pageLen}
+        setPageLen={setPageLen}
+        page={page - 1}
+        setPage={setPage}
+        count={count}
+        order={order}
+        setOrder={setOrder}
+        orderBy={orderBy}
+        setOrderBy={setOrderBy}
+        onRemoveClick={onRemoveClick}
+        handleRefresh={handleRefresh}
+      />
+    </>
   );
 };
 
